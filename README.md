@@ -99,4 +99,8 @@ Namespace是Kubernetes系统中一个很重要的概念,通过系统内部的对
 
 比如 kubectl get nodes 可以简写为kubectl get no
 
+集群部署
+
+[Cluster.md](Cluster.md)
+
 参考文献:<<Kubernetes权威指南>>第一版
