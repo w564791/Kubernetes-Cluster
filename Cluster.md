@@ -7,6 +7,16 @@ kube-controller-manager 的主节点)*
 
 ![K8S-HA](pic/K8S-HA.png)
 
+软件准备
+
+[etcd-v3.1.0](https://github.com/coreos/etcd/releases/download/v3.1.0/etcd-v3.1.0-linux-amd64.tar.gz)
+
+[flannel-v0.7.0](https://github.com/coreos/flannel/releases/download/v0.7.0/flannel-v0.7.0-linux-amd64.tar.gz)
+
+[k8s-client](https://dl.k8s.io/v1.5.2/kubernetes-client-linux-amd64.tar.gz)
+
+[k8s-server](https://dl.k8s.io/v1.5.2/kubernetes-server-linux-amd64.tar.gz)
+
 
 环境:
 
