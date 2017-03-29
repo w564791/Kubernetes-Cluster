@@ -46,7 +46,41 @@ Pod状态:
 
 Service可以跨Node运行;Node,Pod,Service,Container关系如下图:
 ![service](pic/service.png)
-在Pod正常启动后,系统会根据Service的定义创建出于Pod对应的Endpoint对象,以建立起Service与后端Pod的对应关系,随着Pod的创建,销毁,Endpoint对象也将被更新,Endpoint对象主要由Pod的IP地址和容器需要监听的端口号组成,通过kubectl get endpoint可以查看.Service定义的IP(下文简称SVIP)只能在内部(即Pod之间,Service之间)访问;如果要从外部访问,我们只需要将这个Service的端口开放到出去即可(每个节点都会启动相应的端口),Kubernetes支持2种对外服务的Service的type定义:NodePort和LoadBalancer
+在Pod正常启动后,系统会根据Service的定义创建出于Pod对应的Endpoint对象,以建立起Service与后端Pod的对应关系,随着Pod的创建,销毁,Endpoint对象也将被更新,Endpoint对象主要由Pod的IP地址和容器需要监听的端口号组成,通过kubectl get endpoint可以查看.Service定义的IP(下文简称SVIP)只能在内部(即Pod之间,Service之间)访问;如果要从外部访问,我们只需要将这个Service的端口开放到出去即可(每个节点都会启动相应的端口),Kubernetes目前支持3种对外服务的Service的type定义:NodePort,LoadBalancer和ingress
+
+**ingress**
+
+推荐的方式,通过 Ingress 用户可以实现使用 nginx 等开源的反向代理负载均衡器实现对外暴露服务.
+
+使用 Ingress 时一般会有三个组件:
+
+- 反向代理负载均衡器
+- Ingress Controller
+- Ingress
+
+###### 反向代理负载均衡器
+
+反向代理负载均衡器很简单，说白了就是 nginx、apache 什么的；在集群中反向代理负载均衡器可以自由部署，可以使用 Replication Controller、Deployment、DaemonSet 等等，不过个人喜欢以 DaemonSet 的方式部署，感觉比较方便
+
+###### Ingress Controller
+
+Ingress Controller 实质上可以理解为是个监视器，Ingress Controller 通过不断地跟 kubernetes API 打交道，实时的感知后端 service、pod 等变化，比如新增和减少 pod，service 增加与减少等；当得到这些变化信息后，Ingress Controller 再结合下文的 Ingress 生成配置，然后更新反向代理负载均衡器，并刷新其配置，达到服务发现的作用
+
+###### Ingress
+
+Ingress 简单理解就是个规则定义；比如说某个域名对应某个 service，即当某个域名的请求进来时转发给某个 service;这个规则将与 Ingress Controller 结合，然后 Ingress Controller 将其动态写入到负载均衡器配置中，从而实现整体的服务发现和负载均衡
+
+如图:
+
+![](pic/ingress.jpg)
+
+从上图中可以很清晰的看到，实际上请求进来还是被负载均衡器拦截，比如 nginx，然后 Ingress Controller 通过跟 Ingress 交互得知某个域名对应哪个 service，再通过跟 kubernetes API 交互得知 service 地址等信息；综合以后生成配置文件实时写入负载均衡器，然后负载均衡器 reload 该规则便可实现服务发现，即动态映射
+
+了解了以上内容以后，这也就很好的说明了我为什么喜欢把负载均衡器部署为 Daemon Set；因为无论如何请求首先是被负载均衡器拦截的，所以在每个 node 上都部署一下，同时 hostport 方式监听 80 端口；那么就解决了其他方式部署不确定 负载均衡器在哪的问题，同时访问每个 node 的 80 都能正确解析请求；如果前端再 放个 nginx 就又实现了一层负载均衡
+
+[本例使用的ingress部署文件](yaml/)
+
+[ingress部分参考文档](https://mritd.me/2016/12/06/try-traefik-on-kubernetes/#132ingress-controller)
 
 **NodePort**:
 
