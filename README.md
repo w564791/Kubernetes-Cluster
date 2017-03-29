@@ -84,7 +84,7 @@ Ingress 简单理解就是个规则定义；比如说某个域名对应某个 se
 
 **NodePort**:
 
-在定义Service时指定spec.type=NodePort,兵指定spec.ports.nodePort值,系统会在集群种的每个Node上打开一个主机上的真实端口号,这样能放问Node的客户端都能通过任意一个Node来访问这个端口,进而访问内部的Service.
+在定义Service时指定spec.type=NodePort,并指定spec.ports.nodePort值,系统会在集群种的每个Node上打开一个主机上的真实端口号,这样能放问Node的客户端都能通过任意一个Node来访问这个端口,进而访问内部的Service.
 
 **LoadBalancer**:
 如果云服务商支持外接负载均衡器,则可以通过spec.type=LoadBalancer定义Service,同时需要指定负载均衡器的IP,同事还需要指定Service的NodePort和clusterIP.
