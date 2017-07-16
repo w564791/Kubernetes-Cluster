@@ -179,3 +179,17 @@
 
 
     $ kubectl config use-context kubernetes
+
+
+
+
+
+通过apiserver访问dashboard
+
+https://apiserver:6443/api/v1/proxy/namespaces/kube-system/services/kubernetes-dashboard
+
+![login](pic/login.png)
+
+来看看我们创建的几个pods
+
+![screen](pic/screen.png)
