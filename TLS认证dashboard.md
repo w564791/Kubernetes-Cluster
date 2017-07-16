@@ -184,7 +184,7 @@
 
 
 
-通过apiserver访问dashboard
+##### 通过apiserver访问dashboard
 
 备注:因为apiserver和容器之间不可达,所以需要添加一条路由信息;
 
