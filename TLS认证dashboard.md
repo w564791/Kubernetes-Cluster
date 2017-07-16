@@ -60,12 +60,20 @@
 参考https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard.yaml
 
 
+注意事项:
+
+   1.需要将kubeconfig文件挂载至容器内部,本文的此文件路径为/etc/kubeconfig/config2
+
+   2.需要将/etc/hosts挂载到容器内部.因为apiserver认证时不能用IP(证书里面没写IP)
+
+   3.容器启动时必须加--kubeconfig=/etc/kubernetes/config2参数
+
+--kubeconfig 参数说明:
+
+    --kubeconfig string                Path to kubeconfig file with authorization and master location information.
 
 
-
-
-
-
+-------
 
     [root@k8s-1 dashboard]# cat dashboard-controller.yaml
     apiVersion: extensions/v1beta1
@@ -97,7 +105,7 @@
              path: /etc/hosts
             name: ssl-certs-hosts
             #将hosts文件映射到容器内,否则可能会找不到apiserver的地址
-          serviceAccountName: dashboard
+          serviceAccountName: dashboard   #前文创建的serveraccount及这个
           containers:
           - name: kubernetes-dashboard
             image: index.tenxcloud.com/jimmy/kubernetes-dashboard-amd64:v1.6.0
