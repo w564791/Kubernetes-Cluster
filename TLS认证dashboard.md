@@ -140,10 +140,14 @@
           tolerations:
           - key: "CriticalAddonsOnly"
             operator: "Exists"
+##### 将证书导出,装在client浏览器上
+
+
+    openssl pkcs12 -export -in admin.pem -inkey admin-key.pem -out /etc/kubernetes/web-cret.p12
 
 ##### 创建kubectl kubeconfig文件,此文件用于kubectl 各项操作,
 
-* 默认生成路径为~/.kube/config,也可以用于dashboard的https认证,直接拷贝使用,我是直接拷贝到/etc/kubernetes/config2,然后挂载到容器里面作为dashboard的启动参数使用的. 如 --kubeconfig=/etc/kubernetes/config2
+* 默认生成路径为~/.kube/config,也可以用于dashboard,DNS的https认证,直接拷贝使用,我是直接拷贝到/etc/kubernetes/config2,然后挂载到容器里面作为dashboard的启动参数使用的. 如本文 --kubeconfig=/etc/kubernetes/config2
 
 
     export KUBE_APISERVER="https://k8s-2:6443"
@@ -152,14 +156,26 @@
     --certificate-authority=/etc/kubernetes/ssl/ca.pem \
     --embed-certs=true \
     --server=${KUBE_APISERVER}
+
+
     $ # 设置客户端认证参数
+
+
     $ kubectl config set-credentials admin \
     --client-certificate=/etc/kubernetes/ssl/admin.pem \
     --embed-certs=true \
     --client-key=/etc/kubernetes/ssl/admin-key.pem
+
+
     $ # 设置上下文参数
+
+
     $ kubectl config set-context kubernetes \
     --cluster=kubernetes \
     --user=admin
+
+
     $ # 设置默认上下文
+
+
     $ kubectl config use-context kubernetes
