@@ -57,7 +57,7 @@
 
 #### 第三步 创建dashboard-Deployment
 
-* 参考https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard.yaml
+参考https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard.yaml
 
 
 
