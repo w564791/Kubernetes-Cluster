@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+name: k8s-ui
+namespace: kube-system
+spec:
+replicas: 1
+selector:
+name: k8sui
+template:
+metadata:
+  labels:
+	name: k8sui
+spec:
+  containers:
+	- name: k8sui
+	  image: docker.io/mritd/kubernetes-dashboard-amd64
+	  imagePullPolicy: IfNotPresent
+	  args:
+		- --apiserver-host=http://192.168.88.134:8080
+	  ports:
+		- containerPort: 9090

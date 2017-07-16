@@ -494,6 +494,9 @@ Node3的配置与Node1完全一样,不在赘述:
 - describe查看时仅在有event的时候可以看到leader变化.
 - kube-scheduler和kube-controller-manager持有不同的令牌,所以两者leader可能不在一个节点上.
 
+[跳转至下载页](/yaml/dashboard)
+
+
 ##### Kubernetes-dashboard(容器化):
     [root@node1 system]# cat service_UI.yaml
     apiVersion: v1

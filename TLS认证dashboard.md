@@ -1,5 +1,5 @@
 先贴出来yaml文件,再说遇到的坑
-[跳转至下载yaml文件](yaml/dashboard)
+[跳转至下载yaml文件](yaml/dashboard-tls)
 #### 第一步 创建RBRC授权,必须要第一步创建,不然容器也起不来
 
     [root@k8s-1 dashboard]# cat rbac.yml
