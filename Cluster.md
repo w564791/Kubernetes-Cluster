@@ -512,27 +512,27 @@ Node3的配置与Node1完全一样,不在赘述:
         name: k8sui
     [root@node1 system]# cat k8s_ui.yaml
     apiVersion: v1
-kind: ReplicationController
-metadata:
-  name: k8s-ui
-  namespace: kube-system
-spec:
-  replicas: 1
-  selector:
-    name: k8sui
-  template:
-    metadata:
-      labels:
-        name: k8sui
-    spec:
-      containers:
-        - name: k8sui
-          image: docker.io/mritd/kubernetes-dashboard-amd64
-          imagePullPolicy: IfNotPresent
-          args:
-            - --apiserver-host=http://192.168.88.134:8080
-          ports:
-            - containerPort: 9090
+	kind: ReplicationController
+	metadata:
+	  name: k8s-ui
+	  namespace: kube-system
+	spec:
+	  replicas: 1
+	  selector:
+		name: k8sui
+	  template:
+		metadata:
+		  labels:
+			name: k8sui
+		spec:
+		  containers:
+			- name: k8sui
+			  image: docker.io/mritd/kubernetes-dashboard-amd64
+			  imagePullPolicy: IfNotPresent
+			  args:
+				- --apiserver-host=http://192.168.88.134:8080
+			  ports:
+				- containerPort: 9090
 
 后记:一些遇到的坑,和一些使用技巧:
 
