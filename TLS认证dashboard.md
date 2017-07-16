@@ -57,6 +57,8 @@
 
 #### 第三步 创建dashboard-Deployment
 
+* 参考https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard.yaml
+
 
     [root@k8s-1 dashboard]# cat dashboard-controller.yaml
     apiVersion: extensions/v1beta1
