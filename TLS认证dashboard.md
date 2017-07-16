@@ -186,6 +186,12 @@
 
 通过apiserver访问dashboard
 
+备注:因为apiserver和容器之间不可达,所以需要添加一条路由信息;
+
+    route add -net 10.1.34.0/24 gw 192.168.103.143
+
+192.168.103.143是dashboard所在的node(我是单节点测试)
+
 https://apiserver:6443/api/v1/proxy/namespaces/kube-system/services/kubernetes-dashboard
 
 ![login](pic/login.png)
