@@ -48,3 +48,5 @@ spec:
         - --web
         - --web.address=:8580
         - --kubernetes
+      nodeSelector:
+        ingress: "true"
