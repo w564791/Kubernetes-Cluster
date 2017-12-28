@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: heapster
+  namespace: kube-system
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        task: monitoring
+        k8s-app: heapster
+    spec:
+      serviceAccountName: heapster
+      volumes:
+       - hostPath: 
+          path: /etc/hosts
+         name: ssl-certs-hosts
+      containers:
+      - name: heapster
+        image: w564791/heapster-amd64:v1.4.3
+        imagePullPolicy: IfNotPresent
+        command:
+        - /heapster
+        - --source=kubernetes:https://internal-kubernetes-cluster-LB-272185912.cn-north-1.elb.amazonaws.com.cn
+        - --sink=influxdb:http://monitoring-influxdb:8086

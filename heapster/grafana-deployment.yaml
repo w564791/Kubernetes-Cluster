@@ -1,0 +1,52 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: monitoring-grafana
+  namespace: kube-system
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        task: monitoring
+        k8s-app: grafana
+    spec:
+      containers:
+      - name: grafana
+        image: 54.223.110.70/kubernetes/heapster-grafana-amd64:v4.4.3
+        ports:
+          - containerPort: 3000
+            protocol: TCP
+        volumeMounts:
+        - mountPath: /var
+          name: grafana-storage
+        #- name: grafana
+        #  mountPath: /etc/grafana/
+        env:
+        - name: INFLUXDB_SERVICE_URL
+          value: http://monitoring-influxdb:8086
+        - name: GF_AUTH_BASIC_ENABLED
+          value: "true"
+        #- name: GF_SECURITY_ADMIN_USER
+        #  value: "true"
+        - name: GF_AUTH_GOOGLE_CLIENT_SECRET
+          value: 'pxsj2017LV'
+        - name: GF_AUTH_ANONYMOUS_ENABLED
+          value: "false"
+        - name: GF_AUTH_ANONYMOUS_ORG_ROLE
+          value: Admin
+        #- name: GF_SERVER_ROOT_URL
+        #  value: /api/v1/proxy/namespaces/kube-system/services/monitoring-grafana/
+        resources:
+            limits:
+              cpu: 100m
+              memory: 100Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+      volumes:
+      - name: grafana-storage
+        emptyDir: {}
+      - configMap:
+          name: grafana
+        name: grafana
