@@ -1,8 +1,4 @@
 apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: prometheus-k8s
-  namespace: monitoring
 data:
   prometheus.yaml: |
     global:
@@ -769,3 +765,11 @@ data:
           source_labels:
           - __meta_kubernetes_endpoint_port_name
           regex: web
+kind: ConfigMap
+metadata:
+  creationTimestamp: 2018-01-22T04:48:33Z
+  name: prometheus-k8s
+  namespace: monitoring
+  resourceVersion: "11095777"
+  selfLink: /api/v1/namespaces/monitoring/configmaps/prometheus-k8s
+  uid: 8037c027-ff2f-11e7-be0c-02d7c3b02e7a

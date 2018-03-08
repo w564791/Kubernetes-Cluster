@@ -410,43 +410,6 @@ data:
         replacement: ${1}
       - target_label: endpoint
         replacement: http-metrics
-    - job_name: monitoring/api/0
-      honor_labels: false
-      kubernetes_sd_configs:
-      - role: endpoints
-        namespaces:
-          names:
-          - monitoring
-      scrape_interval: 30s
-      relabel_configs:
-      - action: keep
-        source_labels:
-        - __meta_kubernetes_service_label_pxsj_prod
-        regex: python
-      - action: keep
-        source_labels:
-        - __meta_kubernetes_endpoint_port_name
-        regex: http-metrics
-      - source_labels:
-        - __meta_kubernetes_namespace
-        target_label: namespace
-      - source_labels:
-        - __meta_kubernetes_pod_name
-        target_label: pod
-      - source_labels:
-        - __meta_kubernetes_service_name
-        target_label: service
-      - source_labels:
-        - __meta_kubernetes_service_name
-        target_label: job
-        replacement: ${1}
-      - source_labels:
-        - __meta_kubernetes_service_label_pxsj_prod
-        target_label: job
-        regex: (.+)
-        replacement: ${1}
-      - target_label: endpoint
-        replacement: http-metrics
     - job_name: monitoring/kubelet/1
       honor_labels: true
       kubernetes_sd_configs:
@@ -484,43 +447,6 @@ data:
         replacement: ${1}
       - target_label: endpoint
         replacement: cadvisor
-    - job_name: cadvisor-swarm
-      honor_labels: true
-      kubernetes_sd_configs:
-      - role: endpoints
-        namespaces:
-          names:
-          - monitoring
-      scrape_interval: 30s
-      relabel_configs:
-      - action: keep
-        source_labels:
-        - __meta_kubernetes_service_label_swarm_cad
-        regex: cadvisor
-      - action: keep
-        source_labels:
-        - __meta_kubernetes_endpoint_port_name
-        regex: cadvisor
-      - source_labels:
-        - __meta_kubernetes_namespace
-        target_label: namespace
-      - source_labels:
-        - __meta_kubernetes_pod_name
-        target_label: pod
-      - source_labels:
-        - __meta_kubernetes_service_name
-        target_label: service
-      - source_labels:
-        - __meta_kubernetes_service_name
-        target_label: job
-        replacement: ${1}
-      - source_labels:
-        - __meta_kubernetes_service_label_swarm_cad
-        target_label: job
-        regex: (.+)
-        replacement: ${1}
-      - target_label: endpoint
-        replacement: cadvisor-swarm
     - job_name: monitoring/node-exporter/0
       honor_labels: false
       kubernetes_sd_configs:
@@ -558,43 +484,6 @@ data:
         replacement: ${1}
       - target_label: endpoint
         replacement: http-metrics
-    - job_name: node-exporter-swarm
-      honor_labels: false
-      kubernetes_sd_configs:
-      - role: endpoints
-        namespaces:
-          names:
-          - monitoring
-      scrape_interval: 30s
-      relabel_configs:
-      - action: keep
-        source_labels:
-        - __meta_kubernetes_service_label_swarm_http
-        regex: node-exporter
-      - action: keep
-        source_labels:
-        - __meta_kubernetes_endpoint_port_name
-        regex: http-metrics
-      - source_labels:
-        - __meta_kubernetes_namespace
-        target_label: namespace
-      - source_labels:
-        - __meta_kubernetes_pod_name
-        target_label: pod
-      - source_labels:
-        - __meta_kubernetes_service_name
-        target_label: service
-      - source_labels:
-        - __meta_kubernetes_service_name
-        target_label: job
-        replacement: ${1}
-      - source_labels:
-        - __meta_kubernetes_service_label_swarm_http
-        target_label: job
-        regex: (.+)
-        replacement: ${1}
-      - target_label: endpoint
-        replacement: http-metrics-swarm
     - job_name: monitoring/traefik/0
       honor_labels: false
       kubernetes_sd_configs:

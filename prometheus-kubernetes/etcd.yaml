@@ -1,0 +1,11 @@
+Name:			kube-etcd-prometheus-discovery
+Namespace:		kube-system
+Labels:			k8s-app=etcd
+Annotations:		<none>
+Selector:		k8s-app=etcd
+Type:			ClusterIP
+IP:			None
+Port:			api	2379/TCP
+Endpoints:		<none>
+Session Affinity:	None
+Events:			<none>

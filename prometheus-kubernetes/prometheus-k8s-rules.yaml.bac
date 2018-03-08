@@ -154,7 +154,7 @@ data:
           description: '{{ $value }}% or more of {{ $labels.job }} targets are down.'
           summary: Targets are down
       - alert: ApiResponseDoesNotMatchTheDefault
-        expr: upapi != 1
+        expr: upapi == 0
         for: 3m
         labels:
           severity: critical
@@ -251,8 +251,6 @@ data:
           summary: Scheduler is down
   kubelet.rules: |
     groups:
-    - name: kubelet
-      rules:
       - alert: K8SKubeletDown
         expr: count(up{job="kubelet"} == 0) by (instance) / count(up{job="kubelet"}) by (instance) > 0.03
         for: 3m
